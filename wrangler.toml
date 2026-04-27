@@ -1,0 +1,16 @@
+name = "cf-email-fanout-ts"
+main = "src/index.ts"
+compatibility_date = "2026-04-26"
+
+[observability]
+enabled = true
+
+[vars]
+FORWARD_TO = "dest1@example.com,dest2@example.com,dest3@example.com"
+ADD_SUBJECT_PREFIX = "true"
+SUBJECT_PREFIX_MODE = "alias"
+ALLOW_RECIPIENTS = ""
+DENY_RECIPIENTS = "abuse@yourdomain.com,postmaster@yourdomain.com"
+ALLOWED_SENDER_DOMAINS = ""
+DENIED_SENDER_DOMAINS = ""
+MAX_MESSAGE_SIZE_BYTES = "20971520"
