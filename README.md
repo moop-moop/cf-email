@@ -19,6 +19,7 @@ cf-email-fanout-ts/
 │  └─ copilot-instructions.md
 ├─ src/
 │  └─ index.ts
+├─ INSTRUCTIONS.md
 ├─ package.json
 ├─ README.md
 ├─ tsconfig.json

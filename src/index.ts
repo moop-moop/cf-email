@@ -34,7 +34,7 @@ export default {
       deniedSenderDomains: parseList(env.DENIED_SENDER_DOMAINS),
       addSubjectPrefix: asBool(env.ADD_SUBJECT_PREFIX, true),
       subjectPrefixMode: (env.SUBJECT_PREFIX_MODE === "full" ? "full" : "alias") as PrefixMode,
-      maxMessageSizeBytes: Number(env.MAX_MESSAGE_SIZE_BYTES ?? 20 * 1024 * 1024)
+      maxMessageSizeBytes: env.MAX_MESSAGE_SIZE_BYTES ? Number(env.MAX_MESSAGE_SIZE_BYTES) : 20 * 1024 * 1024
     };
 
     const to = lc(message.to);
@@ -76,7 +76,7 @@ export default {
       }
     }
 
-    const rawSize = Number((message as ForwardableEmailMessage & { rawSize?: number }).rawSize ?? 0);
+    const rawSize = message.rawSize;
     if (config.maxMessageSizeBytes && rawSize > config.maxMessageSizeBytes) {
       message.setReject("Message too large");
       return;
@@ -100,7 +100,7 @@ export default {
     const uniqueRecipients = [...new Set(config.forwardTo)];
 
     const results = await Promise.allSettled(
-      uniqueRecipients.map((recipient) => message.forward(recipient, { headers }))
+      uniqueRecipients.map((recipient) => message.forward(recipient, headers))
     );
 
     const successCount = results.filter((result) => result.status === "fulfilled").length;
